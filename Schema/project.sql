@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2016 at 11:33 PM
+-- Generation Time: Nov 24, 2016 at 09:05 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 7.0.9
 
@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 -- Database: `project`
 --
 
-
+DELIMITER $$
 --
 -- Procedures
 --
@@ -28,6 +28,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `authenticateUser` (IN `email` VARCH
 SELECT u.uid,u.email,u.isadmin FROM users u WHERE u.email = email AND u.password = passphrase;
 END$$
 
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -167,16 +168,17 @@ CREATE TABLE `familydetails` (
   `Address` tinytext,
   `CNIC` varchar(45) DEFAULT NULL,
   `Designation` varchar(45) DEFAULT NULL,
-  `Company` varchar(100) DEFAULT NULL
+  `Company` varchar(100) DEFAULT NULL,
+  `Person_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `familydetails`
 --
 
-INSERT INTO `familydetails` (`ID`, `Income`, `NoOfSiblings`, `FName`, `LName`, `PhoneNo`, `Address`, `CNIC`, `Designation`, `Company`) VALUES
-(1, 45400, 5, 'Jaffar', 'Haji', '090078601', 'University Rd, Khi', '904545451004451', 'Owner', 'Jaffar Co.'),
-(2, 6000, 2, 'Karim', 'Ali', '30054678', NULL, '90004548745', 'sales', 'abc');
+INSERT INTO `familydetails` (`ID`, `Income`, `NoOfSiblings`, `FName`, `LName`, `PhoneNo`, `Address`, `CNIC`, `Designation`, `Company`, `Person_id`) VALUES
+(1, 45400, 5, 'Jaffar', 'Haji', '090078601', 'University Rd, Khi', '904545451004451', 'Owner', 'Jaffar Co.', 2),
+(2, 6000, 2, 'Karim', 'Ali', '30054678', NULL, '90004548745', 'sales', 'abc', 3);
 
 -- --------------------------------------------------------
 
@@ -232,7 +234,6 @@ CREATE TABLE `persondetails` (
   `Address` tinytext,
   `City` varchar(45) DEFAULT NULL,
   `District` varchar(45) DEFAULT NULL,
-  `FamilyDetails_ID` int(11) NOT NULL,
   `Status` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -240,9 +241,9 @@ CREATE TABLE `persondetails` (
 -- Dumping data for table `persondetails`
 --
 
-INSERT INTO `persondetails` (`ID`, `FName`, `LName`, `DateOfBirth`, `Email`, `CNIC`, `Phone`, `Address`, `City`, `District`, `FamilyDetails_ID`, `Status`) VALUES
-(2, 'Ali', 'Salim', '2000-01-01', 'abc', '90554512120', '80054587451', NULL, 'Khi', 'Sindh', 1, 'Registered'),
-(3, 'Hajdk', 'dkjvn', '1999-04-25', 'foo', '458412102', '48879455414', 'Allahabad Khi', 'Larkana', 'Sindh', 2, 'Registered');
+INSERT INTO `persondetails` (`ID`, `FName`, `LName`, `DateOfBirth`, `Email`, `CNIC`, `Phone`, `Address`, `City`, `District`, `Status`) VALUES
+(2, 'Ali', 'Salim', '2000-01-01', 'abc', '90554512120', '80054587451', NULL, 'Khi', 'Sindh', 'Registered'),
+(3, 'Hajdk', 'dkjvn', '1999-04-25', 'foo', '458412102', '48879455414', 'Allahabad Khi', 'Larkana', 'Sindh', 'Registered');
 
 -- --------------------------------------------------------
 
@@ -330,7 +331,8 @@ ALTER TABLE `expensetype`
 -- Indexes for table `familydetails`
 --
 ALTER TABLE `familydetails`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `Person_id` (`Person_id`);
 
 --
 -- Indexes for table `institution`
@@ -349,8 +351,7 @@ ALTER TABLE `personalreference`
 --
 ALTER TABLE `persondetails`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `Email` (`Email`),
-  ADD KEY `fk_PersonDetails_FamilyDetails1_idx` (`FamilyDetails_ID`);
+  ADD UNIQUE KEY `Email` (`Email`);
 
 --
 -- Indexes for table `references`
@@ -458,10 +459,15 @@ ALTER TABLE `expensesinfo`
   ADD CONSTRAINT `fk_ExpensesInfo_FamilyDetails1` FOREIGN KEY (`FamilyDetails_ID`) REFERENCES `familydetails` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Constraints for table `familydetails`
+--
+ALTER TABLE `familydetails`
+  ADD CONSTRAINT `familydetails_ibfk_1` FOREIGN KEY (`Person_id`) REFERENCES `persondetails` (`ID`);
+
+--
 -- Constraints for table `persondetails`
 --
 ALTER TABLE `persondetails`
-  ADD CONSTRAINT `fk_PersonDetails_FamilyDetails1` FOREIGN KEY (`FamilyDetails_ID`) REFERENCES `familydetails` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `persondetails_ibfk_1` FOREIGN KEY (`Email`) REFERENCES `users` (`email`);
 
 --
