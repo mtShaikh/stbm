@@ -13,21 +13,26 @@ class Persondetail extends CI_Controller
      */
     function index()
     {  
-        if($this->session->userdata('logged_in')) 
-    {
-        $session_data = $this->session->userdata('logged_in');
-        $data['mail'] = $session_data['email'];;
-        $data['persondetails'] = $this->Persondetail_model->get_all_persondetails();
+          $session_data = $this->session->userdata('logged_in');
+        if($this->session->userdata('logged_in') && $session_data['type']==1) 
+        {
+            $data['mail'] = $session_data['email'];;
+            $data['persondetails'] = $this->Persondetail_model->get_all_persondetails();
 
-        $this->load->view('persondetail/applicants',$data);
-    }
-    else
-  {
+            $this->load->view('persondetail/applicants',$data);
+        }
+        else
+        {
      //If no session, redirect to login page
-  redirect('login/index', 'refresh');
+          redirect('login/index', 'refresh');
+      }
   }
-    }
 
+  function get_data() {
+    $data['ajax_req'] = TRUE;
+    $data['persondetail'] = $this->Persondetail_model->get_all_persondetails();
+     $this->load->view('persondetail/applicants',$data);
+  }
     /*
      * Adding a new persondetail
      */
@@ -35,36 +40,36 @@ class Persondetail extends CI_Controller
     {   
         $this->load->library('form_validation');
 
-		$this->form_validation->set_rules('FName','FName','alpha');
-		$this->form_validation->set_rules('LName','LName','alpha');
-		$this->form_validation->set_rules('Phone','Phone','numeric|max_length[16]');
-		
-		if($this->form_validation->run())     
+        $this->form_validation->set_rules('FName','FName','alpha');
+        $this->form_validation->set_rules('LName','LName','alpha');
+        $this->form_validation->set_rules('Phone','Phone','numeric|max_length[16]');
+
+        if($this->form_validation->run())     
         {   
             $params = array(
-				'FName' => $this->input->post('FName'),
-				'LName' => $this->input->post('LName'),
-				'DateOfBirth' => $this->input->post('DateOfBirth'),
-				'Email' => $this->input->post('Email'),
-				'CNIC' => $this->input->post('CNIC'),
-				'Phone' => $this->input->post('Phone'),
-				'Address' => $this->input->post('Address'),
-				'City' => $this->input->post('City'),
-				'District' => $this->input->post('District'),
-				'FamilyDetails_ID' => $this->input->post('FamilyDetails_ID'),
-				'Status' => $this->input->post('Status'),
-            );
+                'FName' => $this->input->post('FName'),
+                'LName' => $this->input->post('LName'),
+                'DateOfBirth' => $this->input->post('DateOfBirth'),
+                'Email' => $this->input->post('Email'),
+                'CNIC' => $this->input->post('CNIC'),
+                'Phone' => $this->input->post('Phone'),
+                'Address' => $this->input->post('Address'),
+                'City' => $this->input->post('City'),
+                'District' => $this->input->post('District'),
+                'Status' => $this->input->post('Status'),
+                );
             
-           // $persondetail_id = $this->Persondetail_model->add_persondetail($params);
-            redirect('persondetail/applicants');
+            $persondetail_id = $this->Persondetail_model->add_persondetail($params);
+            redirect('admin/applicants');
         }
         else
         {
 
 			/*$this->load->model('Familydetail_model');
 			$data['all_familydetails'] = $this->Familydetail_model->get_all_familydetails();*/
-                
-            $this->load->view('persondetail/add');
+             $session_data = $this->session->userdata('logged_in');
+            $data['mail'] = $session_data['email'];
+            $this->load->view('persondetail/add',$data);
         }
     }  
 
@@ -80,36 +85,36 @@ class Persondetail extends CI_Controller
         {
             $this->load->library('form_validation');
 
-			$this->form_validation->set_rules('FName','FName','alpha');
-			$this->form_validation->set_rules('LName','LName','alpha');
-			$this->form_validation->set_rules('Phone','Phone','numeric|max_length[16]');
-		
-			if($this->form_validation->run())     
+            $this->form_validation->set_rules('FName','FName','alpha');
+            $this->form_validation->set_rules('LName','LName','alpha');
+            $this->form_validation->set_rules('Phone','Phone','numeric|max_length[16]');
+
+            if($this->form_validation->run())     
             {   
                 $params = array(
-					'FName' => $this->input->post('FName'),
-					'LName' => $this->input->post('LName'),
-					'DateOfBirth' => $this->input->post('DateOfBirth'),
-					'Email' => $this->input->post('Email'),
-					'CNIC' => $this->input->post('CNIC'),
-					'Phone' => $this->input->post('Phone'),
-					'Address' => $this->input->post('Address'),
-					'City' => $this->input->post('City'),
-					'District' => $this->input->post('District'),
-					'FamilyDetails_ID' => $this->input->post('FamilyDetails_ID'),
-					'Status' => $this->input->post('Status'),
-                );
+                   'FName' => $this->input->post('FName'),
+                   'LName' => $this->input->post('LName'),
+                   'DateOfBirth' => $this->input->post('DateOfBirth'),
+                   'Email' => $this->input->post('Email'),
+                   'CNIC' => $this->input->post('CNIC'),
+                   'Phone' => $this->input->post('Phone'),
+                   'Address' => $this->input->post('Address'),
+                   'City' => $this->input->post('City'),
+                   'District' => $this->input->post('District'),
+                   'Status' => $this->input->post('Status'),
+                   );
 
                 $this->Persondetail_model->update_persondetail($ID,$params);            
-                redirect('persondetail/applicants');
+                redirect('admin/applicants');
             }
             else
             {   
                 $data['persondetail'] = $this->Persondetail_model->get_persondetail($ID);
-    
+
 				/*$this->load->model('Familydetail_model');
 				$data['all_familydetails'] = $this->Familydetail_model->get_all_familydetails();
-*/
+*/            $session_data = $this->session->userdata('logged_in');
+            $data['mail'] = $session_data['email'];;
                 $this->load->view('persondetail/edit',$data);
             }
         }
@@ -128,7 +133,7 @@ class Persondetail extends CI_Controller
         if(isset($persondetail['ID']))
         {
             $this->Persondetail_model->delete_persondetail($ID);
-            redirect('persondetail/applicants');
+            redirect('admin/applicants');
         }
         else
             show_error('The persondetail you are trying to delete does not exist.');

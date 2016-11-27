@@ -32,22 +32,66 @@ class Verifylogin extends CI_Controller {
      if($result)
      {
        $sess_array = array();
-       $sess_array = array(
+       if($result->isadmin == 1){
+         $sess_array = array(
          'uid' => $result->uid,
          'email' => $result->email,
+         'type' => $result->isadmin
          );
        $this->session->set_userdata('logged_in', $sess_array);
-       if($result->isadmin == 1)
          redirect('admin/dash');
-       else
-         redirect('user_c');
-     }
+       }
+       else{
+         $sess_array = array(
+         'uid' => $result->uid,
+         'email' => $result->email,
+         'type' => $result->isadmin
+         );
+       $this->session->set_userdata('logged_in', $sess_array);
+         redirect('user_c/home');
+          }
+       }
      else{
       $this->session->set_flashdata('fail','Login failed due invalid password or username');
       redirect('login');
     }
   }
 }
+
+function registration(){
+  $this->load->helper('security');
+   //This method will have the credentials validation
+
+   $this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean');
+   $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
+   if($this->form_validation->run() == FALSE)
+   {
+     $this->form_validation->set_message('check_database', 'Invalid email or password');
+     //Field validation failed.  User redirected to login page
+     $this->load->view('register');
+   }
+   else
+   {
+    $email = $this->input->post('email');
+     $password = $this->input->post('password');
+     //query the database
+     $result = $this->user->register($email, $password);
+     if($result){
+      $sess_array = array();
+      $sess_array = array(
+         'email' => $email,
+         'type' => '0'
+         );
+       $this->session->set_userdata('logged_in', $sess_array);
+         redirect('user_c/home');
+     }
+     else {
+            $this->session->set_flashdata('fail','Email already registered!');
+      redirect('login/register');
+     }
+   }
+}
+
 
 }
 

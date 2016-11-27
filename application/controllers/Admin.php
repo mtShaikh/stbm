@@ -9,10 +9,10 @@ class Admin extends CI_Controller {
 
  function index($value="") //TODO:fix this properly
  {
-  if($this->session->userdata('logged_in')) 
+  $session_data = $this->session->userdata('logged_in');
+  if($this->session->userdata('logged_in') && $session_data['type']==1) 
   {
-   $session_data = $this->session->userdata('logged_in');
-   $data['mail'] = $session_data['email'];
+    $data['mail'] = $session_data['email'];
      switch ($value)
      {
       case 'dash':

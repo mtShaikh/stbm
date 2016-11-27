@@ -14,6 +14,9 @@ class Login extends CI_Controller {
 function home(){
   $this->load->view('home');
 }
+function register(){
+	$this->load->view('register');
+}
 }
 
 ?>

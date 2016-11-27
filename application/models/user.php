@@ -25,26 +25,15 @@ class user extends CI_Model
   }
 
 
-    /*public function verify($email)
+    public function register($email,$pass)
     {
-      $this->db->select('r.name');
-      $this->db->from('role r,users u');
-      $this->db->where('u.email',$email);
-      $this->db->where('r.roleID','u.roleID');
-      $this->db->limit(1);
-
-      $query=$this ->db ->get();
-      /*_where('users',[
-        'type'=>$type,
-        'email'=>$email,
-        'password'=>SHA1($pass)
-      ]);
-      if($query->num_rows()==1){
-        return $query->result();
-      }
-      else{
-        return false;
-        }
-    }*/
+      $query = $this->db->query("select registerUser('".$email."','".sha1($pass)."') as res");
+     if($query->res==1){
+      return true;
+     }
+     else{
+      return false;
+     }
+    }
 }
 ?>
