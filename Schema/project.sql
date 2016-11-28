@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2016 at 09:05 PM
+-- Generation Time: Nov 28, 2016 at 08:52 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 7.0.9
 
@@ -28,6 +28,21 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `authenticateUser` (IN `email` VARCH
 SELECT u.uid,u.email,u.isadmin FROM users u WHERE u.email = email AND u.password = passphrase;
 END$$
 
+--
+-- Functions
+--
+CREATE DEFINER=`root`@`localhost` FUNCTION `registerUser` (`mail` VARCHAR(255), `pass` VARCHAR(100)) RETURNS INT(11) NO SQL
+BEGIN
+
+DECLARE duplicate_key CONDITION FOR 1062;
+DECLARE CONTINUE HANDLER FOR  duplicate_key
+ BEGIN
+   RETURN 0;
+ END;
+INSERT INTO users (email,password,isadmin) VALUES (mail,pass,'0');
+   RETURN 1;
+END$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -49,8 +64,7 @@ CREATE TABLE `academicdetails` (
 --
 
 INSERT INTO `academicdetails` (`ID`, `Percentage`, `FieldOfStudy`, `PersonDetails_ID`, `Institution_ID`) VALUES
-(1, 56, 'Engineering', 2, 1),
-(2, 78, 'Medical', 3, 2);
+(1, 56, 'Engineering', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -177,8 +191,7 @@ CREATE TABLE `familydetails` (
 --
 
 INSERT INTO `familydetails` (`ID`, `Income`, `NoOfSiblings`, `FName`, `LName`, `PhoneNo`, `Address`, `CNIC`, `Designation`, `Company`, `Person_id`) VALUES
-(1, 45400, 5, 'Jaffar', 'Haji', '090078601', 'University Rd, Khi', '904545451004451', 'Owner', 'Jaffar Co.', 2),
-(2, 6000, 2, 'Karim', 'Ali', '30054678', NULL, '90004548745', 'sales', 'abc', 3);
+(1, 45400, 5, 'Jaffar', 'Haji', '090078601', 'University Rd, Khi', '904545451004451', 'Owner', 'Jaffar Co.', 2);
 
 -- --------------------------------------------------------
 
@@ -242,8 +255,7 @@ CREATE TABLE `persondetails` (
 --
 
 INSERT INTO `persondetails` (`ID`, `FName`, `LName`, `DateOfBirth`, `Email`, `CNIC`, `Phone`, `Address`, `City`, `District`, `Status`) VALUES
-(2, 'Ali', 'Salim', '2000-01-01', 'abc', '90554512120', '80054587451', NULL, 'Khi', 'Sindh', 'Registered'),
-(3, 'Hajdk', 'dkjvn', '1999-04-25', 'foo', '458412102', '48879455414', 'Allahabad Khi', 'Larkana', 'Sindh', 'Registered');
+(2, 'Ali', 'Salim', '2000-01-01', 'abc', '90554512120', '80054587451', 'B 31, Abc Aptments, Gulshan-e-Hadeed', 'Karachi', 'Sindh', 'Registered');
 
 -- --------------------------------------------------------
 
@@ -279,7 +291,9 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`uid`, `email`, `password`, `isadmin`) VALUES
 (1, 'foo@foo.com', '0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33', 1),
 (2, 'abc', 'a9993e364706816aba3e25717850c26c9cd0d89d', 0),
-(3, 'foo', '0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33', 0);
+(3, 'foo', '0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33', 0),
+(5, 'root', 'dc76e9f0c0006e8f919e0c515c66dbba3982f785', 0),
+(7, 'aaa', '7e240de74fb1ed08fa08d38063f6a6a91462a815', 0);
 
 --
 -- Indexes for dumped tables
@@ -424,15 +438,10 @@ ALTER TABLE `personalreference`
 ALTER TABLE `persondetails`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT for table `references`
---
-ALTER TABLE `references`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `uid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `uid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- Constraints for dumped tables
 --
@@ -442,41 +451,33 @@ ALTER TABLE `users`
 --
 ALTER TABLE `academicdetails`
   ADD CONSTRAINT `fk_AcademicDetails_Institution1` FOREIGN KEY (`Institution_ID`) REFERENCES `institution` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_AcademicDetails_PersonDetails1` FOREIGN KEY (`PersonDetails_ID`) REFERENCES `persondetails` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_AcademicDetails_PersonDetails1` FOREIGN KEY (`PersonDetails_ID`) REFERENCES `persondetails` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `assetsinfo`
 --
 ALTER TABLE `assetsinfo`
   ADD CONSTRAINT `assetsinfo_ibfk_1` FOREIGN KEY (`AssetType_ID`) REFERENCES `assettype` (`ID`),
-  ADD CONSTRAINT `fk_AssetsInfo_FamilyDetails1` FOREIGN KEY (`FamilyDetails_ID`) REFERENCES `familydetails` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_AssetsInfo_FamilyDetails1` FOREIGN KEY (`FamilyDetails_ID`) REFERENCES `familydetails` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `expensesinfo`
 --
 ALTER TABLE `expensesinfo`
   ADD CONSTRAINT `expensesinfo_ibfk_1` FOREIGN KEY (`ExpenseType_ID`) REFERENCES `expensetype` (`ID`),
-  ADD CONSTRAINT `fk_ExpensesInfo_FamilyDetails1` FOREIGN KEY (`FamilyDetails_ID`) REFERENCES `familydetails` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_ExpensesInfo_FamilyDetails1` FOREIGN KEY (`FamilyDetails_ID`) REFERENCES `familydetails` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `familydetails`
 --
 ALTER TABLE `familydetails`
-  ADD CONSTRAINT `familydetails_ibfk_1` FOREIGN KEY (`Person_id`) REFERENCES `persondetails` (`ID`);
+  ADD CONSTRAINT `familydetails_ibfk_1` FOREIGN KEY (`Person_id`) REFERENCES `persondetails` (`ID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `persondetails`
 --
 ALTER TABLE `persondetails`
-  ADD CONSTRAINT `persondetails_ibfk_1` FOREIGN KEY (`Email`) REFERENCES `users` (`email`);
-
---
--- Constraints for table `references`
---
-ALTER TABLE `references`
-  ADD CONSTRAINT `fk_References_AcademicReference1` FOREIGN KEY (`AcademicReference_ID`) REFERENCES `academicreference` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_References_PersonDetails1` FOREIGN KEY (`PersonDetails_ID`) REFERENCES `persondetails` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_References_PersonalReference1` FOREIGN KEY (`PersonalReference_ID`) REFERENCES `personalreference` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `persondetails_ibfk_1` FOREIGN KEY (`Email`) REFERENCES `users` (`email`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
