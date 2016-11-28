@@ -74,10 +74,7 @@
 						</td>
 					</tr>
 					<?php } ?>
-				</table>
-				<div class="pull-right">
-					<a href="<?php echo site_url('persondetail/add'); ?>" class="btn btn-success">Add</a> 
-				</div>
+				</table> 	
 	</div>
 	</div>
 	</div>

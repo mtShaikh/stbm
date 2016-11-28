@@ -28,11 +28,11 @@ class Persondetail extends CI_Controller
       }
   }
 
-  function get_data() {
+/*  function get_data() {
     $data['ajax_req'] = TRUE;
     $data['persondetail'] = $this->Persondetail_model->get_all_persondetails();
      $this->load->view('persondetail/applicants',$data);
-  }
+  }*/
     /*
      * Adding a new persondetail
      */

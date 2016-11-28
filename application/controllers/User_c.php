@@ -72,7 +72,6 @@ class User_c extends CI_Controller {
                 );
             
             $persondetail_id = $this->Persondetail_model->add_persondetail($params);
-            redirect('admin/applicants');
         }
         else
         {

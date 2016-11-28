@@ -1,107 +1,45 @@
-
+<!DOCTYPE html>
+<html>
 <head>
 	<title>My Charity A Charity category Flat bootstrap Responsive Website Template|About :: w3layouts</title>
-	<link href='<?php echo base_url(); ?>assets/css/style.css' rel='stylesheet' type='text/css' media='all' />
 	<link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
-   <link href="<?php echo base_url(); ?>assets/css/datepicker3.css" rel="stylesheet">
-   <link href="<?php echo base_url(); ?>assets/css/styles.css" rel="stylesheet">
-
- <!--Icons-->
- <script src="<?php echo base_url(); ?>assets/js/lumino.glyphs.js"></script>
+	<link href="<?php echo base_url(); ?>assets/css/datepicker3.css" rel="stylesheet">
+	<link href="<?php echo base_url(); ?>assets/css/styles.css" rel="stylesheet">
+	<!--Icons-->
+	<script src="<?php echo base_url(); ?>assets/js/lumino.glyphs.js"></script>
 	<!--web-fonts-->'
 	<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
 	<!--js-->
-	<script src=''<?php echo base_url(); ?>js/jquery.min.js'></script>
-	<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
-	<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-	<script type='application/x-javascript'>
-		addEventListener('load', function() {
-			setTimeout(hideURLbar, 0);
-		}, false);
-
-		function hideURLbar() {
-			window.scrollTo(0, 1);
-		} >
-	</script>
-	<meta name='keywords' content='My Charity Responsive web template, Bootstrap Web Templates, Flat Web Templates, AndriodCompatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design'
-	/>
-	<!-- start-smoth-scrolling -->
-	<script type='text/javascript' src='<?php echo base_url(); ?>assets/js/move-top.js'></script>
-	<script type='text/javascript' src='<?php echo base_url(); ?>assets/js/easing.js'></script>
-	<script type='text/javascript'>
-		jQuery(document).ready(function($) {
-			$('.scroll').click(function(event) {
-				event.preventDefault();
-				$('html,body').animate({
-					scrollTop: $(this.hash).offset().top
-				}, 1000);
-			});
-		});
-	</script>
-	<style>
-		img {
-			vertical-align: middle;
-			width: 131px;
-			height: 69px;
-		}
-
-		font {
-			font-family: Kristen ITC;
-			color: #7B1B06;
-			font-size: 20px;
-		}
-
-		.get-main {
-			width: 80%;
-			outline: none;
-			margin-bottom: 10px;
-			padding: 8px;
-			margin-left: 370px;
-		}
-
-		.get-left p {
-			font-size: 15px;
-			font-weight: 400;
-			color: #9B242D;
-			margin-bottom: 5px;
-			margin-left: 60x;
-		}
-
-		.get-main h4 {
-			margin-left: 100px;
-		}
-	</style>
-	<!-- //end-smoth-scrolling -->
 </head>
 
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#"><span>Hello </span>User</a>
-        <ul class="user-menu">
-          <li class="dropdown pull-right">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg><?php echo $email;?> <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="<?php echo site_url('user_c/logout')?>"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><span>Hello </span>User</a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg><?php echo $email;?> <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="<?php echo site_url('user_c/logout')?>"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
 
-    </div><!-- /.container-fluid -->
-  </nav>
-<div id="sidebar-collapse" class="col-sm-3 col-md-2 sidebar">
-  <br>
-  <ul class="nav menu">
-    <li><a href="<?php echo site_url('user_c/home')?>"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg>Home</a></li>
-    <li class="parent active">
+		</div><!-- /.container-fluid -->
+	</nav>
+	<div id="sidebar-collapse" class="col-sm-3 col-md-2 sidebar">
+		<br>
+		<ul class="nav menu">
+			<li><a href="<?php echo site_url('user_c/home')?>"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg>Home</a></li>
+			<li class="parent active">
 				<a href="<?php echo site_url('user_c/applications')?>">
 					<span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>Application
 				</a>
@@ -139,44 +77,86 @@
 				</ul>
 			</li>
 			<li role="presentation" class="divider"></li>
-    <li><a href="<?php echo site_url('user_c/pass')?>"><svg class="glyph stroked pen tip"><use xlink:href="#stroked-pen-tip"></use></svg> Change Password</a></li>
-    <li role="presentation" class="divider"></li>
-    <li><a href="<?php echo site_url('user_c/logout')?>"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
-  </ul>
-</div>
-<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-		<div class='get'>
-			<div class='container'>
-				<div class='get-main'>
-					<h4><strong>Personal Information</strong></h4>
-					<br></br>
-					<div class='col-md-6 get-left'>
-						<p>Name</p>
-						<input type='text' value='' onfocus='this.value = '';' onblur='if (this.value == '') {this.value = '';}' / required>
-						<p>CNIC</p>
-						<input type='text' value='' onfocus='this.value = '';' onblur='if (this.value == '') {this.value = '';}' / required>
-						<p>Address</p>
-						<input type='text' value='' onfocus='this.value = '';' onblur='if (this.value == '') {this.value = '';}' / required>
-						<p>City</p>
-						<input type='text' value='' onfocus='this.value = '';' onblur='if (this.value == '') {this.value = '';}' / required>
-						<p>District</p>
-						<input type='text' value='' onfocus='this.value = '';' onblur='if (this.value == '') {this.value = '';}' / required>
-						<p>Date Of Birth</p>
-						<input type='text' value='' onfocus='this.value = '';' onblur='if (this.value == '') {this.value = '';}' / required>
-						<p>Phone Number</p>
-						<input type='text' value='' onfocus='this.value = '';' onblur='if (this.value == '') {this.value = '';}' / required>
-						<a href='academic.html'> <input type='submit' value='Next'></a>
-						<input type='submit' value='Save'>
+			<li><a href="<?php echo site_url('user_c/pass')?>"><svg class="glyph stroked pen tip"><use xlink:href="#stroked-pen-tip"></use></svg> Change Password</a></li>
+			<li role="presentation" class="divider"></li>
+			<li><a href="<?php echo site_url('user_c/logout')?>"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+		</ul>
+	</div>
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+		<div class="row"><h2 class="text-center">Personal Information</h2></div>
+		<br>
+		<div class="row">
+			<div class="form-horizontal">
+				<div class="form-group">
+					<label for="FName" class="col-md-4 control-label">FName</label>
+					<div class="col-md-4">
+						<input type="text" name="FName" value="<?php echo $this->input->post('FName'); ?>" class="form-control" id="FName" />
 					</div>
-
-					<div class='clearfix'> </div>
+				</div>
+				<div class="form-group">
+					<label for="LName" class="col-md-4 control-label">LName</label>
+					<div class="col-md-4">
+						<input type="text" name="LName" value="<?php echo $this->input->post('LName'); ?>" class="form-control" id="LName" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="DateOfBirth" class="col-md-4 control-label">DateOfBirth</label>
+					<div class="col-md-4">
+						<input type="text" name="DateOfBirth" value="<?php echo $this->input->post('DateOfBirth'); ?>" class="form-control" id="DateOfBirth" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="Email" class="col-md-4 control-label">Email</label>
+					<div class="col-md-4">
+						<input type="text" name="Email" value="<?php echo $this->input->post('Email'); ?>" class="form-control" id="Email" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="CNIC" class="col-md-4 control-label">CNIC</label>
+					<div class="col-md-4">
+						<input type="text" name="CNIC" value="<?php echo $this->input->post('CNIC'); ?>" class="form-control" id="CNIC" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="Phone" class="col-md-4 control-label">Phone</label>
+					<div class="col-md-4">
+						<input type="text" name="Phone" value="<?php echo $this->input->post('Phone'); ?>" class="form-control" id="Phone" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="Address" class="col-md-4 control-label">Address</label>
+					<div class="col-md-4">
+						<textarea name="Address" value="<?php echo $this->input->post('Address'); ?>" class="form-control" id="Address"></textarea>  
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="City" class="col-md-4 control-label">City</label>
+					<div class="col-md-4">
+						<input type="text" name="City" value="<?php echo $this->input->post('City'); ?>" class="form-control" id="City" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="District" class="col-md-4 control-label">District</label>
+					<div class="col-md-4">
+						<input type="text" name="District" value="<?php echo $this->input->post('District'); ?>" class="form-control" id="District" />
+					</div>
+				</div>
+				<div class="form-group">
+				<div class="row">
+					<div class="col-md-4"></div>
+					<div class="col-md-3">
+					<button type="submit" class="btn btn-success btn-lg">Save</button>	
+					</div>
+					<div class="col-md-3">
+					<button type="submit" class="btn btn-success btn-lg">Next</button>		
+					</div>
+					</div>
 				</div>
 			</div>
 		</div>
-		</div>
-<script src="<?php echo base_url(); ?>assets/js/jquery-1.11.1.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/bootstrap-datepicker.js"></script>
+	</div>
+	<script src="<?php echo base_url(); ?>assets/js/jquery-1.11.1.min.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/bootstrap-datepicker.js"></script>
 </body>
-
 </html>
