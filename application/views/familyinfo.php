@@ -79,8 +79,6 @@
               <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Personal References     
             </a>
           </li>
-										
-				  
 				</ul>
 			</li>
 			<li role="presentation" class="divider"></li>
@@ -90,64 +88,66 @@
 		</ul>
 	</div>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-		<div class="row"><h2 class="text-center">Personal Information</h2></div>
+		<div class="row"><h2 class="text-center">Family Information</h2></div>
 		<br>
 		<div class="row">
 			<div class="form-horizontal">
+				
 				<div class="form-group">
-					<label for="FName" class="col-md-4 control-label">First Name</label>
+					<label for="GName" class="col-md-4 control-label">Guardian Name</label>
 					<div class="col-md-4">
-						<input type="text" name="FName" value="<?php echo $this->input->post('FName'); ?>" class="form-control" id="FName" />
+						<input type="text" name="GName" value="<?php echo $this->input->post('GName'); ?>" class="form-control" id="GName" />
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="LName" class="col-md-4 control-label">Last Name</label>
+					<label for="PhoneNo" class="col-md-4 control-label">Phone Number</label>
 					<div class="col-md-4">
-						<input type="text" name="LName" value="<?php echo $this->input->post('LName'); ?>" class="form-control" id="LName" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="DateOfBirth" class="col-md-4 control-label">Date Of Birth</label>
-					<div class="col-md-4">
-						<input type="text" name="DateOfBirth" value="<?php echo $this->input->post('DateOfBirth'); ?>" class="form-control" id="DateOfBirth" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="Email" class="col-md-4 control-label">Email</label>
-					<div class="col-md-4">
-						<input type="text" name="Email" value="<?php echo $this->input->post('Email'); ?>" class="form-control" id="Email" />
+						<input type="text" name="PhoneNo" value="<?php echo $this->input->post('PhoneNo'); ?>" class="form-control" id="PhoneNo" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="CNIC" class="col-md-4 control-label">CNIC</label>
 					<div class="col-md-4">
-						<input type="text" name="CNIC" value="<?php echo $this->input->post('CNIC'); ?>" class="form-control" id="CNIC" />
+						<input type="text" name="CNIC" value="<?php echo $this->input->post('Email'); ?>" class="form-control" id="CNIC" />
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="Phone" class="col-md-4 control-label">Phone</label>
+					<label for="domicile" class="col-md-4 control-label">Domicile district</label>
 					<div class="col-md-4">
-						<input type="text" name="Phone" value="<?php echo $this->input->post('Phone'); ?>" class="form-control" id="Phone" />
+						<input type="domicile" name="Institution" value="<?php echo $this->input->post('Institution'); ?>" class="form-control" id="domicile" />
 					</div>
 				</div>
+
 				<div class="form-group">
-					<label for="Address" class="col-md-4 control-label">Address</label>
+					<label for="occupation" class="col-md-4 control-label">Occupation</label>
 					<div class="col-md-4">
-						<textarea name="Address" value="<?php echo $this->input->post('Address'); ?>" class="form-control" id="Address"></textarea>  
+						<input type="occupation" name="Institution" value="<?php echo $this->input->post('Institution'); ?>" class="form-control" id="occupation" />
 					</div>
 				</div>
+
+
 				<div class="form-group">
-					<label for="City" class="col-md-4 control-label">City</label>
+					<label for="designation" class="col-md-4 control-label">Designation</label>
 					<div class="col-md-4">
-						<input type="text" name="City" value="<?php echo $this->input->post('City'); ?>" class="form-control" id="City" />
+						<input type="designation" name="designation" value="<?php echo $this->input->post('Institution'); ?>" class="form-control" id="designation" />
 					</div>
 				</div>
+
+
 				<div class="form-group">
-					<label for="District" class="col-md-4 control-label">District</label>
+					<label for="company" class="col-md-4 control-label">Name of company</label>
 					<div class="col-md-4">
-						<input type="text" name="District" value="<?php echo $this->input->post('District'); ?>" class="form-control" id="District" />
+						<input type="company" name="company" value="<?php echo $this->input->post('Institution'); ?>" class="form-control" id="company" />
 					</div>
 				</div>
+
+				<div class="form-group">
+					<label for="siblings" class="col-md-4 control-label">No: of siblings</label>
+					<div class="col-md-4">
+						<input type="siblings" name="siblings" value="<?php echo $this->input->post('Institution'); ?>" class="form-control" id="siblings" />
+					</div>
+				</div>
+				
 				<div class="form-group">
 				<div class="row">
 					<div class="col-md-4"></div>

@@ -79,8 +79,6 @@
               <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Personal References     
             </a>
           </li>
-										
-				  
 				</ul>
 			</li>
 			<li role="presentation" class="divider"></li>
@@ -90,64 +88,41 @@
 		</ul>
 	</div>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-		<div class="row"><h2 class="text-center">Personal Information</h2></div>
+		<div class="row"><h2 class="text-center">Academic Inforamtion</h2></div>
 		<br>
 		<div class="row">
 			<div class="form-horizontal">
 				<div class="form-group">
-					<label for="FName" class="col-md-4 control-label">First Name</label>
+					<label for="SName" class="col-md-4 control-label">School Name</label>
 					<div class="col-md-4">
-						<input type="text" name="FName" value="<?php echo $this->input->post('FName'); ?>" class="form-control" id="FName" />
+						<input type="text" name="SName" value="<?php echo $this->input->post('SName'); ?>" class="form-control" id="SName" />
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="LName" class="col-md-4 control-label">Last Name</label>
+					<label for="CName" class="col-md-4 control-label">College Name</label>
 					<div class="col-md-4">
-						<input type="text" name="LName" value="<?php echo $this->input->post('LName'); ?>" class="form-control" id="LName" />
+						<input type="text" name="CName" value="<?php echo $this->input->post('CName'); ?>" class="form-control" id="CName" />
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="DateOfBirth" class="col-md-4 control-label">Date Of Birth</label>
+					<label for="SSC" class="col-md-4 control-label">SSC Percentage</label>
 					<div class="col-md-4">
-						<input type="text" name="DateOfBirth" value="<?php echo $this->input->post('DateOfBirth'); ?>" class="form-control" id="DateOfBirth" />
+						<input type="text" name="SSC" value="<?php echo $this->input->post('SSC'); ?>" class="form-control" id="SSC" />
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="Email" class="col-md-4 control-label">Email</label>
+					<label for="HSC" class="col-md-4 control-label">HSC Percentage</label>
 					<div class="col-md-4">
-						<input type="text" name="Email" value="<?php echo $this->input->post('Email'); ?>" class="form-control" id="Email" />
+						<input type="text" name="HSC" value="<?php echo $this->input->post('HSC'); ?>" class="form-control" id="HSC" />
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="CNIC" class="col-md-4 control-label">CNIC</label>
+					<label for="board" class="col-md-4 control-label">Examintaion Board</label>
 					<div class="col-md-4">
-						<input type="text" name="CNIC" value="<?php echo $this->input->post('CNIC'); ?>" class="form-control" id="CNIC" />
+						<input type="text" name="board" value="<?php echo $this->input->post('board'); ?>" class="form-control" id="board" />
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="Phone" class="col-md-4 control-label">Phone</label>
-					<div class="col-md-4">
-						<input type="text" name="Phone" value="<?php echo $this->input->post('Phone'); ?>" class="form-control" id="Phone" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="Address" class="col-md-4 control-label">Address</label>
-					<div class="col-md-4">
-						<textarea name="Address" value="<?php echo $this->input->post('Address'); ?>" class="form-control" id="Address"></textarea>  
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="City" class="col-md-4 control-label">City</label>
-					<div class="col-md-4">
-						<input type="text" name="City" value="<?php echo $this->input->post('City'); ?>" class="form-control" id="City" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="District" class="col-md-4 control-label">District</label>
-					<div class="col-md-4">
-						<input type="text" name="District" value="<?php echo $this->input->post('District'); ?>" class="form-control" id="District" />
-					</div>
-				</div>
+				
 				<div class="form-group">
 				<div class="row">
 					<div class="col-md-4"></div>
