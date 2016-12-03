@@ -5,16 +5,18 @@ class Admin extends CI_Controller {
  function __construct()
  {
    parent::__construct();
+   $route['user_c/editpass'] = 'user_c/editpass';
  }
 
- function index($value="") //TODO:fix this properly
+ function index($value="") //TODO:fix this properly 
  {
   $session_data = $this->session->userdata('logged_in');
   if($this->session->userdata('logged_in') && $session_data['type']==1) 
   {
     $data['mail'] = $session_data['email'];
-     switch ($value)
-     {
+    $data['type'] = $session_data['type'];
+    switch ($value)
+    {
       case 'dash':
       $this->load->view($value, $data);
       break; 
@@ -23,21 +25,32 @@ class Admin extends CI_Controller {
       redirect('persondetail');
       break; 
       case 'applications':
-      $this->load->view($value, $data);
+      redirect('academicdetail');
       break; 
+      case 'institution':
+      redirect('institution');
+      break;
+      case 'assetsexp':
+      redirect('assettype');
+      break;
+      case 'changepass':
+      $this->load->view('changepass',$data);
+      break;
       default:
       $this->session->unset_userdata('logged_in'); //fix this properly
       session_destroy();
       redirect('login/index', 'refresh');
       break;
     }
-}
-else
-{
+  }
+  else
+  {
      //If no session, redirect to login page
- redirect('login/index', 'refresh');
+   redirect('login/index', 'refresh');
+ }
 }
-}
+
+
 
 function logout()
 {

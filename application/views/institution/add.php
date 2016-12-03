@@ -1,5 +1,3 @@
-<?php echo validation_errors(); ?>
-<?php echo form_open('persondetail/add',array("class"=>"form-horizontal")); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,46 +25,19 @@
 		<?php include(dirname(__DIR__)."/sidebar.php"); ?>
 	</div>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+	<br>
+<?php echo form_open('institution/add',array("class"=>"form-horizontal")); ?>
+
 	<div class="form-group">
-		<label for="FName" class="col-md-4 control-label">FName</label>
+		<label for="Name" class="col-md-4 control-label">Name</label>
 		<div class="col-md-8">
-			<input type="text" name="FName" value="<?php echo $this->input->post('FName'); ?>" class="form-control" id="FName" />
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="LName" class="col-md-4 control-label">LName</label>
-		<div class="col-md-8">
-			<input type="text" name="LName" value="<?php echo $this->input->post('LName'); ?>" class="form-control" id="LName" />
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="DateOfBirth" class="col-md-4 control-label">DateOfBirth</label>
-		<div class="col-md-8">
-			<input type="text" name="DateOfBirth" value="<?php echo $this->input->post('DateOfBirth'); ?>" class="form-control" id="DateOfBirth" />
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="Email" class="col-md-4 control-label">Email</label>
-		<div class="col-md-8">
-			<input type="text" name="Email" value="<?php echo $this->input->post('Email'); ?>" class="form-control" id="Email" />
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="CNIC" class="col-md-4 control-label">CNIC</label>
-		<div class="col-md-8">
-			<input type="text" name="CNIC" value="<?php echo $this->input->post('CNIC'); ?>" class="form-control" id="CNIC" />
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="Phone" class="col-md-4 control-label">Phone</label>
-		<div class="col-md-8">
-			<input type="text" name="Phone" value="<?php echo $this->input->post('Phone'); ?>" class="form-control" id="Phone" />
+			<input type="text" name="Name" value="<?php echo $this->input->post('Name'); ?>" class="form-control" id="Name" />
 		</div>
 	</div>
 	<div class="form-group">
 		<label for="Address" class="col-md-4 control-label">Address</label>
 		<div class="col-md-8">
-			<input type="text" name="Address" value="<?php echo $this->input->post('Address'); ?>" class="form-control" id="Address" />
+			<textarea name="Address" class="form-control" id="Address"><?php echo $this->input->post('Address'); ?></textarea>
 		</div>
 	</div>
 	<div class="form-group">
@@ -76,30 +47,11 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="District" class="col-md-4 control-label">District</label>
+		<label for="Type" class="col-md-4 control-label">Type</label>
 		<div class="col-md-8">
-			<input type="text" name="District" value="<?php echo $this->input->post('District'); ?>" class="form-control" id="District" />
+			<input type="text" name="Type" value="<?php echo $this->input->post('Type'); ?>" class="form-control" id="Type" />
 		</div>
 	</div>
-	<div class="form-group">
-			<label for="Status" class="col-md-4 control-label">Status</label>
-			<div class="col-md-8">
-				<select name="Status" class="form-control">
-					<option value="">select</option>
-					<?php 
-					$Status_values = array(
-					);
-
-					foreach($Status_values as $value => $display_text)
-					{
-						$selected = ($value == $this->input->post('Status')) ? ' selected="selected"' : null;
-
-						echo '<option value="'.$value.'" '.$selected.'>'.$display_text.'</option>';
-					} 
-					?>
-				</select>
-			</div>
-		</div>
 	
 	<div class="form-group">
 		<div class="col-sm-offset-4 col-sm-8">

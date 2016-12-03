@@ -24,16 +24,27 @@ class user extends CI_Model
     }
   }
 
+  public function changepass($email,$pass,$oldPass)
+  {
+   $query = $this->db->query("select changePass('".$email."','".sha1($pass)."','".sha1($oldPass)."') as res");
+   if($query->row()->res=='n'){
+    return false;
+  }
+  else{
+    return true;
+  }
+}
 
-    public function register($email,$pass)
-    {
-      $query = $this->db->query("select registerUser('".$email."','".sha1($pass)."') as res");
-     if($query->res==1){
-      return true;
-     }
-     else{
-      return false;
-     }
-    }
+public function register($email,$pass)
+{
+  $query = $this->db->query("select registerUser('".$email."','".sha1($pass)."') as res");
+  if($query->res=='n'){
+    return false;
+  }
+  else{
+    return true;
+  }
+}
+
 }
 ?>

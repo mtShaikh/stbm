@@ -345,7 +345,7 @@ ALTER TABLE `expensetype`
 -- Indexes for table `familydetails`
 --
 ALTER TABLE `familydetails`
-  ADD PRIMARY KEY (`ID`),
+  ADD PRIMARY KEY (`ID`,`Person_id`),
   ADD UNIQUE KEY `Person_id` (`Person_id`);
 
 --

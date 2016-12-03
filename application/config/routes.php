@@ -53,7 +53,9 @@ $route['default_controller'] = 'home_c';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['admin/logout'] = 'admin/logout';
+$route['admin/editpass'] = 'admin/editpass';
 $route['admin/(:any)'] = 'admin/index/$1';
 $route['user_c/logout'] = 'user_c/logout';
+$route['user_c/editpass'] = 'user_c/editpass';
 $route['user_c/(:any)'] = 'user_c/index/$1';
 

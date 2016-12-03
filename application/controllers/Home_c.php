@@ -8,7 +8,6 @@ class Home_c extends CI_Controller {
 
  function index()
  {
-//   $this->load->helper(array('form'));
    $this->load->view('home');
  }
 

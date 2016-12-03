@@ -16,9 +16,9 @@ class Persondetail extends CI_Controller
           $session_data = $this->session->userdata('logged_in');
         if($this->session->userdata('logged_in') && $session_data['type']==1) 
         {
-            $data['mail'] = $session_data['email'];;
+            $data['mail'] = $session_data['email'];
             $data['persondetails'] = $this->Persondetail_model->get_all_persondetails();
-
+            $data['type'] =$session_data['type'];
             $this->load->view('persondetail/applicants',$data);
         }
         else

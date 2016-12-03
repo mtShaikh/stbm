@@ -83,7 +83,7 @@ function registration(){
          'type' => '0'
          );
        $this->session->set_userdata('logged_in', $sess_array);
-         redirect('user_c/home');
+         redirect('user_c/register');
      }
      else {
             $this->session->set_flashdata('fail','Email already registered!');

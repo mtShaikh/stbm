@@ -5,6 +5,8 @@ class User_c extends CI_Controller {
  function __construct()
  {
    parent::__construct();
+   $this->load->model('user','',TRUE);
+   $this->load->library('form_validation');
  }
 
  function index($value="")
@@ -12,7 +14,8 @@ class User_c extends CI_Controller {
    if($this->session->userdata('logged_in'))
    {
      $session_data = $this->session->userdata('logged_in');
-     $data['email'] = $session_data['email'];
+     $data['mail'] = $session_data['email'];
+     $data['type'] = $session_data['type'];
      $data['new'] = "";
      switch ($value)
      {
@@ -23,6 +26,10 @@ class User_c extends CI_Controller {
       $this->load->view('application', $data);
       break;
       case 'pass':
+      $this->load->view('changepass', $data);
+      break;
+      case 'family':
+      $this->load->view('application', $data);
       break;
       case 'person':
       $this->load->view('personform',$data);
@@ -32,6 +39,7 @@ class User_c extends CI_Controller {
       break;
       case 'register':
       $data['new'] = "Welcome to STB's Scholarship Portal!";
+      var_dump($data);
       $this->load->view('user_view', $data);
       break;
       default:
@@ -39,57 +47,76 @@ class User_c extends CI_Controller {
       session_destroy();
       redirect('login/index', 'refresh');
       break;
-     }
-   }
-   else
-   {
+    }
+  }
+  else
+  {
      //If no session, redirect to login page
-     redirect('login/index', 'refresh');
-   }
+   redirect('login/index', 'refresh');
  }
+}
 //add personalDetails function
- function addPerson()
-    {   
-        $this->load->library('form_validation');
+function addPerson()
+{   
+  $this->form_validation->set_rules('FName','FName','alpha');
+  $this->form_validation->set_rules('LName','LName','alpha');
+  $this->form_validation->set_rules('Phone','Phone','numeric|max_length[16]');
 
-        $this->form_validation->set_rules('FName','FName','alpha');
-        $this->form_validation->set_rules('LName','LName','alpha');
-        $this->form_validation->set_rules('Phone','Phone','numeric|max_length[16]');
+  if($this->form_validation->run())     
+  {   
+    $params = array(
+      'FName' => $this->input->post('FName'),
+      'LName' => $this->input->post('LName'),
+      'DateOfBirth' => $this->input->post('DateOfBirth'),
+      'Email' => $this->input->post('Email'),
+      'CNIC' => $this->input->post('CNIC'),
+      'Phone' => $this->input->post('Phone'),
+      'Address' => $this->input->post('Address'),
+      'City' => $this->input->post('City'),
+      'District' => $this->input->post('District'),
+      'Status' => 'Registered',
+      );
 
-        if($this->form_validation->run())     
-        {   
-            $params = array(
-                'FName' => $this->input->post('FName'),
-                'LName' => $this->input->post('LName'),
-                'DateOfBirth' => $this->input->post('DateOfBirth'),
-                'Email' => $this->input->post('Email'),
-                'CNIC' => $this->input->post('CNIC'),
-                'Phone' => $this->input->post('Phone'),
-                'Address' => $this->input->post('Address'),
-                'City' => $this->input->post('City'),
-                'District' => $this->input->post('District'),
-                'Status' => 'Registered',
-                );
-            
-            $persondetail_id = $this->Persondetail_model->add_persondetail($params);
-        }
-        else
-        {
+    $persondetail_id = $this->Persondetail_model->add_persondetail($params);
+  }
+  else
+  {
 
       /*$this->load->model('Familydetail_model');
       $data['all_familydetails'] = $this->Familydetail_model->get_all_familydetails();*/
-             $session_data = $this->session->userdata('logged_in');
-            $data['mail'] = $session_data['email'];
-            $this->load->view('persondetail/add',$data);
+      $session_data = $this->session->userdata('logged_in');
+      $data['mail'] = $session_data['email'];
+      $this->load->view('persondetail/add',$data);
+    }
+  } 
+
+    function editpass(){
+        $oldPass = $this->input->post('old');
+        $newPass = $this->input->post('new');
+        $session_data = $this->session->userdata('logged_in');
+        $result = $this->user->changepass($session_data['email'],$newPass,$oldPass);
+        if($result){
+         //$data = array('data'=>"Your password has been changed!");
+         //$this->output->set_content_type('application/json');
+        // echo json_encode($data);
+        $res = "true";
+        echo $res;
         }
-    } 
-
-
+        else{
+         /* $data = array('data'=>"Your password not has been changed!");
+           $this->output->set_content_type('application/json');
+           echo json_encode($data);
+          die();*/
+          $res = "false";
+          echo $res;
+        }
+      
+    }
 
 
 //logout function
- function logout()
- {
+  function logout()
+  {
    $this->session->unset_userdata('logged_in');
    session_destroy();
    redirect('user_c', 'refresh');
