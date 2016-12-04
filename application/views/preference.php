@@ -19,38 +19,37 @@
 		<?php include("usidebar.php"); ?>
 	</div>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-		<?php echo form_open('assetsinfo/edit/'.$mail,array("class"=>"form-horizontal")); ?>
-		<div class="row"><h2 class="text-center">Assets</h2></div>
-		<div class="row"><h4 class="text-center">please mention current market values in rupees</h4></div>
+		<div class="row"><h2 class="text-center">Personal reference</h2></div>
 		<br>
 		<div class="row">
 			<div class="form-horizontal">
-				<div class="form-group">
-					<label for="assetsinfo1" class="col-md-4 control-label">Plot/House</label>
-					<div class="col-md-4">
-						<input type="text" name="assetsinfo1" value="<?php echo ($this->input->post('assetsinfo1') ? $this->input->post('assetsinfo1') : $assetsinfo1['amount']); ?>" class="form-control" id="assetsinfo1" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="assetsinfo2" class="col-md-4 control-label">Business</label>
-					<div class="col-md-4">
-						<input type="text" name="assetsinfo2" value="<?php echo ($this->input->post('assetsinfo2') ? $this->input->post('assetsinfo2') : $assetsinfo2['amount']); ?>" class="form-control" id="assetsinfo2" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="assetsinfo3" class="col-md-4 control-label">Investments</label>
-					<div class="col-md-4">
-						<input type="text" name="assetsinfo3" value="<?php echo ($this->input->post('assetsinfo3') ? $this->input->post('assetsinfo3') : $assetsinfo3['amount']); ?>" class="form-control" id="assetsinfo3" />
-					</div>
-				</div>
+				<?php echo validation_errors(); ?>
+				<?php echo form_open('personalreference/edit/'.$mail,array("class"=>"form-horizontal")); ?>
 
 				<div class="form-group">
-					<label for="assetsinfo4" class="col-md-4 control-label">Vehicle</label>
+					<label for="Name" class="col-md-4 control-label">Name</label>
 					<div class="col-md-4">
-						<input type="text" name="assetsinfo4" value="<?php echo ($this->input->post('assetsinfo4') ? $this->input->post('assetsinfo4') : $assetsinfo4['amount']); ?>" class="form-control" id="assetsinfo4" />
+						<input type="text" name="Name" value="<?php echo ($this->input->post('Name') ? $this->input->post('Name') : $personalreference['Name']); ?>" class="form-control" id="Name" />
 					</div>
 				</div>
-				
+				<div class="form-group">
+					<label for="PhoneNo" class="col-md-4 control-label">PhoneNo</label>
+					<div class="col-md-4">
+						<input type="text" name="PhoneNo" value="<?php echo ($this->input->post('PhoneNo') ? $this->input->post('PhoneNo') : $personalreference['PhoneNo']); ?>" class="form-control" id="PhoneNo" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="Email" class="col-md-4 control-label">Email</label>
+					<div class="col-md-4">
+						<input type="text" name="Email" value="<?php echo ($this->input->post('Email') ? $this->input->post('Email') : $personalreference['Email']); ?>" class="form-control" id="Email" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="Relationship" class="col-md-4 control-label">Relationship</label>
+					<div class="col-md-4">
+						<input type="text" name="Relationship" value="<?php echo ($this->input->post('Relationship') ? $this->input->post('Relationship') : $personalreference['Relationship']); ?>" class="form-control" id="Relationship" />
+					</div>
+				</div>
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-4"></div>
@@ -63,6 +62,7 @@
 					</div>
 				</div>
 			</div>
+			<?php echo form_close(); ?>
 		</div>
 	</div>
 	<script src="<?php echo base_url(); ?>assets/js/jquery-1.11.1.min.js"></script>

@@ -7,6 +7,10 @@ class User_c extends CI_Controller {
    parent::__construct();
    $this->load->model('user','',TRUE);
    $this->load->library('form_validation');
+   $this->load->model('Persondetail_model');
+   $this->load->model('Academicdetail_model');
+   $this->load->model('Institution_model');
+   $this->load->model('Familydetail_model');
  }
 
  function index($value="")
@@ -25,17 +29,29 @@ class User_c extends CI_Controller {
       case 'applications':
       $this->load->view('application', $data);
       break;
+      case 'person':
+-     redirect('persondetail/edit/'.$data['mail']);
+      break;
+      case 'academic':
+-     $this->load->view('academicform',$data);
+      break;
       case 'pass':
       $this->load->view('changepass', $data);
       break;
       case 'family':
-      $this->load->view('application', $data);
+      redirect('familydetail/edit/'.$data['mail']);
       break;
-      case 'person':
-      $this->load->view('personform',$data);
+      case 'asset':
+      redirect('assetsinfo/edit/'.$data['mail']);
       break;
-      case 'academic':
-      $this->load->view('academicform',$data);
+      case 'expense':
+      redirect('expensesinfo/edit/'.$data['mail']);
+      break;
+      case 'areference':
+      redirect('academicreference/edit/'.$data['mail']);
+      break;
+      case 'preference':
+      redirect('personalreference/edit/'.$data['mail']);
       break;
       case 'register':
       $data['new'] = "Welcome to STB's Scholarship Portal!";
@@ -55,75 +71,70 @@ class User_c extends CI_Controller {
    redirect('login/index', 'refresh');
  }
 }
-//add personalDetails function
-function addPerson()
-{   
-  $this->form_validation->set_rules('FName','FName','alpha');
-  $this->form_validation->set_rules('LName','LName','alpha');
-  $this->form_validation->set_rules('Phone','Phone','numeric|max_length[16]');
 
+//add academic details
+function addacademicinfo($email)
+{
+  $ID = $this->Persondetail_model->getID($email);
+  $this->form_validation->set_rules('Percentage','Percentage','decimal');
   if($this->form_validation->run())     
   {   
     $params = array(
-      'FName' => $this->input->post('FName'),
-      'LName' => $this->input->post('LName'),
-      'DateOfBirth' => $this->input->post('DateOfBirth'),
-      'Email' => $this->input->post('Email'),
-      'CNIC' => $this->input->post('CNIC'),
-      'Phone' => $this->input->post('Phone'),
-      'Address' => $this->input->post('Address'),
-      'City' => $this->input->post('City'),
-      'District' => $this->input->post('District'),
-      'Status' => 'Registered',
-      );
+     'Percentage' => $this->input->post('Percentage'),
+     'FieldOfStudy' => $this->input->post('FieldOfStudy'),
+     'Institution_ID' => $this->input->post('Institution_ID'),
+     );
 
-    $persondetail_id = $this->Persondetail_model->add_persondetail($params);
+    $this->Academicdetail_model->update_academicdetail($ID,$params);            
+    //redirect('academicdetail/index');
   }
   else
-  {
+  {   
+    $data['all_institution'] = $this->Institution_model->get_all_institution();
+    $session_data = $this->session->userdata('logged_in');
+    $data['mail'] = $session_data['email'];
+    $data['type'] = $session_data['type'];
+    $data['academicdetail'] = $this->Academicdetail_model->get_academicdetail($ID);
+    $this->load->view('academicinfo',$data);
+  }
 
-      /*$this->load->model('Familydetail_model');
-      $data['all_familydetails'] = $this->Familydetail_model->get_all_familydetails();*/
-      $session_data = $this->session->userdata('logged_in');
-      $data['mail'] = $session_data['email'];
-      $this->load->view('persondetail/add',$data);
-    }
-  } 
+}
 
-    function editpass(){
-        $oldPass = $this->input->post('old');
-        $newPass = $this->input->post('new');
-        $session_data = $this->session->userdata('logged_in');
-        $result = $this->user->changepass($session_data['email'],$newPass,$oldPass);
-        if($result){
+//edit password function
+function editpass(){
+  $oldPass = $this->input->post('old');
+  $newPass = $this->input->post('new');
+  $session_data = $this->session->userdata('logged_in');
+  $result = $this->user->changepass($session_data['email'],$newPass,$oldPass);
+  if($result){
          //$data = array('data'=>"Your password has been changed!");
          //$this->output->set_content_type('application/json');
         // echo json_encode($data);
-        $res = "true";
-        echo $res;
-        }
-        else{
+    $res = "true";
+    echo $res;
+  }
+  else{
          /* $data = array('data'=>"Your password not has been changed!");
            $this->output->set_content_type('application/json');
            echo json_encode($data);
-          die();*/
-          $res = "false";
-          echo $res;
-        }
-      
-    }
+           die();*/
+           $res = "false";
+           echo $res;
+         }
+
+       }
 
 
 //logout function
-  function logout()
-  {
-   $this->session->unset_userdata('logged_in');
-   session_destroy();
-   redirect('user_c', 'refresh');
- }
- function form(){
-   $this->load->view('form');
- }
-}
+       function logout()
+       {
+         $this->session->unset_userdata('logged_in');
+         session_destroy();
+         redirect('user_c', 'refresh');
+       }
+       function form(){
+         $this->load->view('form');
+       }
+     }
 
-?>
+     ?>

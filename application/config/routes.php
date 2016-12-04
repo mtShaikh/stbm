@@ -57,5 +57,6 @@ $route['admin/editpass'] = 'admin/editpass';
 $route['admin/(:any)'] = 'admin/index/$1';
 $route['user_c/logout'] = 'user_c/logout';
 $route['user_c/editpass'] = 'user_c/editpass';
+//$route['user_c/addacademicinfo/(:any)'] = 'user_c/addacademicinfo/$1';
 $route['user_c/(:any)'] = 'user_c/index/$1';
 

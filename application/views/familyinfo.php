@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>My Charity A Charity category Flat bootstrap Responsive Website Template|About :: w3layouts</title>
+	<title></title>
 	<link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="<?php echo base_url(); ?>assets/css/datepicker3.css" rel="stylesheet">
 	<link href="<?php echo base_url(); ?>assets/css/styles.css" rel="stylesheet">
@@ -13,154 +13,82 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#"><span>Hello </span>User</a>
-				<ul class="user-menu">
-					<li class="dropdown pull-right">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg><?php echo $email;?> <span class="caret"></span></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="<?php echo site_url('user_c/logout')?>"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-
-		</div><!-- /.container-fluid -->
-	</nav>
+	<?php include("nav.php"); ?>
 	<div id="sidebar-collapse" class="col-sm-3 col-md-2 sidebar">
 		<br>
-		<ul class="nav menu">
-			<li><a href="<?php echo site_url('user_c/home')?>"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg>Home</a></li>
-			<li class="parent active">
-				<a href="<?php echo site_url('user_c/applications')?>">
-					<span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>Application
-				</a>
-				<ul class="children collapse in" id="sub-item-1">
-					<li>
-						<a class="" href="<?php echo site_url('user_c/person')?>">
-							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Personal Information
-						</a>
-					</li>
-					<li>
-						<a class="" href="<?php echo site_url('user_c/academic')?>">
-							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Academics
-						</a>
-					</li>
-					<li>
-						<a class="" href="<?php echo site_url('user_c/family')?>">
-							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Family Information 	 	
-						</a>
-					</li>
-					<li>
-						<a class="" href="<?php echo site_url('user_c/expense')?>">
-							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Expenses 	 	
-						</a>
-					</li>
-					<li>
-						<a class="" href="<?php echo site_url('user_c/asset')?>">
-							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Assets 	 	
-						</a>
-					</li>
-					<li>
-            <a class="" href="<?php echo site_url('user_c/reference')?>">
-              <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Academic References     
-            </a>
-          </li>
-          <li>
-            <a class="" href="<?php echo site_url('user_c/Preference')?>">
-              <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Personal References     
-            </a>
-          </li>
-				</ul>
-			</li>
-			<li role="presentation" class="divider"></li>
-			<li><a href="<?php echo site_url('user_c/pass')?>"><svg class="glyph stroked pen tip"><use xlink:href="#stroked-pen-tip"></use></svg> Change Password</a></li>
-			<li role="presentation" class="divider"></li>
-			<li><a href="<?php echo site_url('user_c/logout')?>"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
-		</ul>
+		<?php include("usidebar.php"); ?>
 	</div>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+		<?php echo validation_errors(); ?>
+		<?php echo form_open('familydetail/edit/'.$mail,array("class"=>"form-horizontal")); ?>
 		<div class="row"><h2 class="text-center">Family Information</h2></div>
 		<br>
 		<div class="row">
-			<div class="form-horizontal">
+			<div class="form-horizontal">	
 				
 				<div class="form-group">
-					<label for="GName" class="col-md-4 control-label">Guardian Name</label>
+					<label for="Income" class="col-md-4 control-label">Income</label>
 					<div class="col-md-4">
-						<input type="text" name="GName" value="<?php echo $this->input->post('GName'); ?>" class="form-control" id="GName" />
+						<input type="text" name="Income" value="<?php echo ($this->input->post('Income') ? $this->input->post('Income') : $familydetail['Income']); ?>" class="form-control" id="Income" />
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="PhoneNo" class="col-md-4 control-label">Phone Number</label>
+					<label for="NoOfSiblings" class="col-md-4 control-label">NoOfSiblings</label>
 					<div class="col-md-4">
-						<input type="text" name="PhoneNo" value="<?php echo $this->input->post('PhoneNo'); ?>" class="form-control" id="PhoneNo" />
+						<input type="text" name="NoOfSiblings" value="<?php echo ($this->input->post('NoOfSiblings') ? $this->input->post('NoOfSiblings') : $familydetail['NoOfSiblings']); ?>" class="form-control" id="NoOfSiblings" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="FName" class="col-md-4 control-label">FName</label>
+					<div class="col-md-4">
+						<input type="text" name="FName" value="<?php echo ($this->input->post('FName') ? $this->input->post('FName') : $familydetail['FName']); ?>" class="form-control" id="FName" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="LName" class="col-md-4 control-label">LName</label>
+					<div class="col-md-4">
+						<input type="text" name="LName" value="<?php echo ($this->input->post('LName') ? $this->input->post('LName') : $familydetail['LName']); ?>" class="form-control" id="LName" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="PhoneNo" class="col-md-4 control-label">PhoneNo</label>
+					<div class="col-md-4">
+						<input type="text" name="PhoneNo" value="<?php echo ($this->input->post('PhoneNo') ? $this->input->post('PhoneNo') : $familydetail['PhoneNo']); ?>" class="form-control" id="PhoneNo" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="CNIC" class="col-md-4 control-label">CNIC</label>
 					<div class="col-md-4">
-						<input type="text" name="CNIC" value="<?php echo $this->input->post('Email'); ?>" class="form-control" id="CNIC" />
+						<input type="text" name="CNIC" value="<?php echo ($this->input->post('CNIC') ? $this->input->post('CNIC') : $familydetail['CNIC']); ?>" class="form-control" id="CNIC" />
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="domicile" class="col-md-4 control-label">Domicile district</label>
+					<label for="Designation" class="col-md-4 control-label">Designation</label>
 					<div class="col-md-4">
-						<input type="domicile" name="Institution" value="<?php echo $this->input->post('Institution'); ?>" class="form-control" id="domicile" />
+						<input type="text" name="Designation" value="<?php echo ($this->input->post('Designation') ? $this->input->post('Designation') : $familydetail['Designation']); ?>" class="form-control" id="Designation" />
 					</div>
 				</div>
-
 				<div class="form-group">
-					<label for="occupation" class="col-md-4 control-label">Occupation</label>
+					<label for="Company" class="col-md-4 control-label">Company</label>
 					<div class="col-md-4">
-						<input type="occupation" name="Institution" value="<?php echo $this->input->post('Institution'); ?>" class="form-control" id="occupation" />
-					</div>
-				</div>
-
-
-				<div class="form-group">
-					<label for="designation" class="col-md-4 control-label">Designation</label>
-					<div class="col-md-4">
-						<input type="designation" name="designation" value="<?php echo $this->input->post('Institution'); ?>" class="form-control" id="designation" />
-					</div>
-				</div>
-
-
-				<div class="form-group">
-					<label for="company" class="col-md-4 control-label">Name of company</label>
-					<div class="col-md-4">
-						<input type="company" name="company" value="<?php echo $this->input->post('Institution'); ?>" class="form-control" id="company" />
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="siblings" class="col-md-4 control-label">No: of siblings</label>
-					<div class="col-md-4">
-						<input type="siblings" name="siblings" value="<?php echo $this->input->post('Institution'); ?>" class="form-control" id="siblings" />
+						<input type="text" name="Company" value="<?php echo ($this->input->post('Company') ? $this->input->post('Company') : $familydetail['Company']); ?>" class="form-control" id="Company" />
 					</div>
 				</div>
 				
 				<div class="form-group">
-				<div class="row">
-					<div class="col-md-4"></div>
-					<div class="col-md-3">
-					<button type="submit" class="btn btn-success btn-lg">Save</button>	
-					</div>
-					<div class="col-md-3">
-					<button type="submit" class="btn btn-success btn-lg">Next</button>		
-					</div>
+					<div class="row">
+						<div class="col-md-4"></div>
+						<div class="col-md-3">
+							<button type="submit" name="sbm" value="back" class="btn btn-success btn-lg">Back</button>	
+						</div>
+						<div class="col-md-3">
+							<button type="submit" name="sbm" value="next" class="btn btn-success btn-lg">Next</button>		
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<?php echo form_close(); ?>
 	</div>
 	<script src="<?php echo base_url(); ?>assets/js/jquery-1.11.1.min.js"></script>
 	<script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>

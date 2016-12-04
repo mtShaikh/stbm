@@ -8,13 +8,13 @@
         <span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>Application
       </a>
       <ul class="children collapse.in" id="sub-item-1">
-        <li class="<?php if($this->uri->uri_string() == 'user_c/person') { echo 'active'; } ?>">
+        <li class="<?php if($this->uri->segment(2) == 'person') { echo 'active'; } ?>">
           <a class="" href="<?php echo site_url('user_c/person')?>">
             <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Personal Information
           </a>
         </li>
-        <li class="<?php if($this->uri->uri_string() == 'user_c/academic') { echo 'active'; } ?>">
-          <a class="" href="<?php echo site_url('user_c/academic')?>">
+        <li class="<?php if($this->uri->segment(2) == 'user_c/addacademicinfo') { echo 'active'; } ?>">
+          <a class="" href="<?php echo site_url('user_c/addacademicinfo/'.$mail)?>">
             <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Academics
           </a>
         </li>
@@ -33,9 +33,14 @@
             <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Assets     
           </a>
         </li>
-        <li class="<?php if($this->uri->uri_string() == 'user_c/reference') { echo 'active'; } ?>">
-          <a class="" href="<?php echo site_url('user_c/reference')?>">
-            <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> References     
+        <li class="<?php if($this->uri->uri_string() == 'user_c/areference') { echo 'active'; } ?>">
+          <a class="" href="<?php echo site_url('user_c/areference')?>">
+            <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Academic Reference
+          </a>
+        </li>
+        <li class="<?php if($this->uri->uri_string() == 'user_c/preference') { echo 'active'; } ?>">
+          <a class="" href="<?php echo site_url('user_c/preference')?>">
+            <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Personal Reference
           </a>
         </li>
       </ul>

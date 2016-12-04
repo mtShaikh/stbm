@@ -24,7 +24,18 @@ class Persondetail_model extends CI_Model
     {
         return $this->db->get('persondetails')->result_array();
     }
-    
+    /*
+    * Get ID using email
+    */
+    function getID($email){
+        $this->db->select('ID');
+        $this->db->from('persondetails');
+        $this->db->where('email', $email); 
+        $query = $this->db->get();
+        $row =$query->row(); 
+        return $row->ID;
+    }
+
     /*
      * function to add new persondetail
      */

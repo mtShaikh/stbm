@@ -45,7 +45,7 @@
 			</div>
 		</div><!-- /.col-->
 	</div><!-- /.row -->
-	<a href="home"><h4 class="text-center">HOME</h4></a>
+	<a href="<?php echo site_url('home_c')?>"><h4 class="text-center">HOME</h4></a>
 	<script src="<?php echo base_url(); ?>assets/js/jquery-1.11.1.min.js"></script>
 	<script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
 	<script src="<?php echo base_url(); ?>assets/js/chart.min.js"></script>

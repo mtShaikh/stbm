@@ -22,7 +22,7 @@ class Academicdetail extends CI_Controller
         {
             $data['mail'] = $session_data['email'];
             $data['academicdetails'] = $this->Academicdetail_model->get_all_academicdetails();
-             $data['type'] =$session_data['type'];
+            $data['type'] = $session_data['type'];
             $this->load->view('academicdetail/academic',$data);
         }
 

@@ -10,6 +10,9 @@ class Assetsinfo extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Assetsinfo_model');
+        $this->load->model('Familydetail_model');
+        $this->load->library('form_validation');
+        $this->load->model('Persondetail_model');
         
     } 
 
@@ -58,33 +61,43 @@ class Assetsinfo extends CI_Controller
     /*
      * Editing a assetsinfo
      */
-    function edit($ID)
-    {   
-        // check if the assetsinfo exists before trying to edit it
-        $assetsinfo = $this->Assetsinfo_model->get_assetsinfo($ID);
-        
-        if(isset($assetsinfo['ID']))
-        {
-            if(isset($_POST) && count($_POST) > 0)     
-            {   
-                $params = array(
-                   'Amount' => $this->input->post('Amount'),
-                   'AssetType_ID' => $this->input->post('AssetType_ID'),
-                   );
+    function edit($email)
+    {   $ID = $this->Persondetail_model->getID($email);
+       $fID = $this->Familydetail_model->getID($ID);
+       $session_data = $this->session->userdata('logged_in');
+       $data['mail'] = $session_data['email'];
+       $data['type'] = $session_data['type'];
+       if($this->session->userdata('logged_in') && $data['type']== 0)
+       {
+        if(isset($_POST) && count($_POST) > 0)     
+        {   
+            for ($i=1; $i < 5; $i++) 
+            { 
+                $assetsinfo = $this->input->post('assetsinfo'.$i);
+                $this->Assetsinfo_model->update_assetsinfo($i,$fID,$expensesinfo);  
+                //mysqli_next_result( $this->db->conn_id ); 
+            }
 
-                $this->Assetsinfo_model->update_assetsinfo($ID,$params);            
-                redirect('assetsinfo/index');
-            }
-            else
-            {   
-                $data['assetsinfo'] = $this->Assetsinfo_model->get_assetsinfo($ID);
-                $session_data = $this->session->userdata('logged_in');
-                $data['mail'] = $session_data['email'];
-                $this->load->view('assetsinfo/edit',$data);
-            }
+          if($this->input->post('sbm')=="back"){
+            redirect('user_c/expense');
+          }
+          else {
+            redirect('user_c/areference');
+          }
         }
         else
-            show_error('The assetsinfo you are trying to edit does not exist.');
+        {   
+            for ($i=1; $i < 5; $i++) { 
+             $data['assetsinfo'.$i] = $this->Assetsinfo_model->get_assetsinfo($fID,$i);
+             mysqli_next_result( $this->db->conn_id );
+         }
+         $this->load->view('assets',$data);
+     }
+ }
+ else
+ {
+    redirect('login/index', 'refresh');
+}
     } 
 
     /*
