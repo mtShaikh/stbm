@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2016 at 01:14 PM
+-- Generation Time: Dec 10, 2016 at 02:37 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 7.0.9
 
@@ -29,9 +29,98 @@ SELECT u.uid,u.email,u.isadmin FROM users u WHERE u.email = email AND u.password
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `displayAcademics` ()  BEGIN
-SELECT pd.FName,pd.LName,ad.Percentage,ad.FieldOfStudy,i.Name FROM academicdetails ad, persondetails pd, institution i 
-WHERE 
-(ad.PersonDetails_ID=pd.ID) AND (ad.Institution_ID=i.ID);
+SELECT pd.FName,pd.LName,ad.Percentage,i.Name 
+FROM  persondetails pd 
+INNER JOIN academicdetails ad 
+ON
+ad.PersonDetails_ID=pd.ID 
+INNER JOIN  institution i 
+ON
+ ad.Institution_ID=i.ID;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `displayAReference` ()  NO SQL
+BEGIN
+SELECT
+concat(pd.fname,' ',
+pd.lname) as PersonName,
+a.name as ReferenceName,
+a.phoneno,
+a.email,
+a.Institution
+FROM academicreference a
+INNER JOIN persondetails pd
+ON 
+a.Person_id = pd.ID;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `displayAssets` ()  NO SQL
+BEGIN
+SELECT
+concat(pd.fname,' ',
+pd.lname) as PersonName,
+i.Amount,
+t.Name
+from assettype t, persondetails pd
+INNER JOIN familydetails f
+on 
+ pd.ID= f.Person_id
+INNER JOIN assetsinfo i 
+on 
+f.ID = i.FamilyDetails_ID
+where i.AssetType_ID = t.ID
+;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `displayExpenses` ()  NO SQL
+BEGIN
+SELECT
+concat(pd.fname,' ',
+pd.lname) as PersonName,
+i.Amount,
+t.Name
+from expensetype t, persondetails pd
+INNER JOIN familydetails f
+on 
+ pd.ID= f.Person_id
+INNER JOIN expensesinfo i 
+on 
+f.ID = i.FamilyDetails_ID
+where i.ExpenseType_ID = t.ID;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `displayFamily` ()  NO SQL
+BEGIN
+SELECT
+concat(pd.fname,' ',
+pd.lname) as Name,
+f.Income,
+f.NoOfSiblings,
+concat(f.FName,' ',
+f.LName) as GuardianName,
+f.PhoneNo,
+f.CNIC,
+f.Designation,
+f.Company
+FROM familydetails f
+INNER JOIN persondetails pd
+ON
+ pd.ID = f.Person_id;
+ END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `displayPReference` ()  NO SQL
+BEGIN
+SELECT
+concat(pd.fname,' ',
+pd.lname) as PersonName,
+p.name as ReferenceName,
+p.phoneno,
+p.email,
+p.Relationship
+FROM personalreference p
+INNER JOIN persondetails pd
+ON 
+p.Person_id = pd.ID;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getAssets` (IN `familyId` INT, IN `typeID` INT)  NO SQL
@@ -39,9 +128,24 @@ BEGIN
 SELECT familydetails_ID as ID, t.name as name, amount from assetsinfo a, assettype t where (a.AssetType_ID = t.ID) AND (a.FamilyDetails_ID=familyID) AND (a.AssetType_ID = typeID);
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getCollege` (IN `PersonID` INT)  NO SQL
+BEGIN
+SELECT a.PersonDetails_ID, a.Institution_ID,i.Name, i.Type, `Percentage` FROM academicdetails a, institution i WHERE i.ID = a.Institution_ID AND i.Type = 'College' AND a.PersonDetails_ID = PersonID;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getExpenses` (IN `familyID` INT, IN `typeID` INT)  NO SQL
 BEGIN
 SELECT familydetails_ID as ID, t.name as name, amount from expensesinfo e, expensetype t where (e.ExpenseType_ID = t.ID) AND (e.FamilyDetails_ID=familyID) AND (e.ExpenseType_ID = typeID);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getLastInsert` ()  NO SQL
+BEGIN
+SELECT MAX(ID) as ID FROM institution;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getSchool` (IN `PersonID` INT)  NO SQL
+BEGIN
+SELECT a.PersonDetails_ID, a.Institution_ID, i.Name, i.Type, `Percentage` FROM academicdetails a, institution i WHERE i.ID = a.Institution_ID AND i.Type = 'School' AND a.PersonDetails_ID=personID;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `updateAssets` (IN `assetID` INT, IN `familyID` INT, IN `amnt` FLOAT)  NO SQL
@@ -94,19 +198,23 @@ DELIMITER ;
 CREATE TABLE `academicdetails` (
   `ID` int(11) NOT NULL,
   `Percentage` float DEFAULT NULL,
-  `FieldOfStudy` varchar(45) DEFAULT NULL,
   `PersonDetails_ID` int(11) NOT NULL,
-  `Institution_ID` int(11) DEFAULT NULL
+  `Institution_ID` int(11) DEFAULT NULL,
+  `iscollege` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `academicdetails`
 --
 
-INSERT INTO `academicdetails` (`ID`, `Percentage`, `FieldOfStudy`, `PersonDetails_ID`, `Institution_ID`) VALUES
-(1, 56, 'Engineering', 2, 1),
-(2, NULL, NULL, 23, NULL),
-(3, NULL, NULL, 24, NULL);
+INSERT INTO `academicdetails` (`ID`, `Percentage`, `PersonDetails_ID`, `Institution_ID`, `iscollege`) VALUES
+(1, 70, 2, 1, 0),
+(4, NULL, 25, NULL, 0),
+(10, 85, 2, 4, 1),
+(13, NULL, 27, NULL, 0),
+(14, NULL, 27, NULL, 1),
+(15, 50, 28, 8, 0),
+(16, NULL, 28, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -128,7 +236,10 @@ CREATE TABLE `academicreference` (
 --
 
 INSERT INTO `academicreference` (`ID`, `Name`, `PhoneNo`, `Email`, `Institution`, `Person_id`) VALUES
-(1, 'abaaf', '', '', '', 2);
+(1, 'abaaf', '', '', '', 2),
+(2, NULL, NULL, NULL, NULL, 25),
+(4, NULL, NULL, NULL, NULL, 27),
+(5, NULL, NULL, NULL, NULL, 28);
 
 -- --------------------------------------------------------
 
@@ -148,9 +259,20 @@ CREATE TABLE `assetsinfo` (
 --
 
 INSERT INTO `assetsinfo` (`ID`, `Amount`, `AssetType_ID`, `FamilyDetails_ID`) VALUES
-(1, 0, 1, 1),
-(5, 0, 2, 1),
-(7, NULL, 1, 4);
+(8, 0, 1, 5),
+(9, 0, 2, 5),
+(10, 780, 3, 5),
+(11, 4400, 4, 5),
+(16, 600, 1, 1),
+(17, 4875, 2, 1),
+(18, NULL, 1, 7),
+(19, NULL, 2, 7),
+(20, NULL, 3, 7),
+(21, NULL, 4, 7),
+(22, 0, 1, 8),
+(23, 0, 2, 8),
+(24, 0, 3, 8),
+(25, 0, 4, 8);
 
 -- --------------------------------------------------------
 
@@ -191,16 +313,30 @@ CREATE TABLE `expensesinfo` (
 --
 
 INSERT INTO `expensesinfo` (`ID`, `ExpenseType_ID`, `FamilyDetails_ID`, `Amount`) VALUES
-(1, 1, 1, 540000),
-(2, 2, 1, 8000),
-(8, 1, 4, 5000),
-(9, 2, 4, 4000),
-(10, 3, 4, 0),
-(11, 4, 4, 0),
-(12, 5, 4, 0),
-(13, 6, 4, 0),
-(14, 7, 4, 0),
-(15, 8, 4, 0);
+(16, 1, 5, 0),
+(17, 2, 5, 0),
+(18, 3, 5, 0),
+(19, 4, 5, 0),
+(20, 5, 5, 0),
+(21, 6, 5, 0),
+(22, 7, 5, 0),
+(23, 8, 5, 0),
+(32, 1, 7, NULL),
+(33, 2, 7, NULL),
+(34, 3, 7, NULL),
+(35, 4, 7, NULL),
+(36, 5, 7, NULL),
+(37, 6, 7, NULL),
+(38, 7, 7, NULL),
+(39, 8, 7, NULL),
+(40, 1, 8, 0),
+(41, 2, 8, 0),
+(42, 3, 8, 0),
+(43, 4, 8, 0),
+(44, 5, 8, 0),
+(45, 6, 8, 0),
+(46, 7, 8, 0),
+(47, 8, 8, 0);
 
 -- --------------------------------------------------------
 
@@ -252,9 +388,9 @@ CREATE TABLE `familydetails` (
 
 INSERT INTO `familydetails` (`ID`, `Income`, `NoOfSiblings`, `FName`, `LName`, `PhoneNo`, `CNIC`, `Designation`, `Company`, `Person_id`) VALUES
 (1, 50000, 5, 'Jaffar', 'Haji', '090078601', '904545451004451', 'Owner', 'Jaffar Co.', 2),
-(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 19),
-(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 23),
-(4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 24);
+(5, 50000, 45, 'Jareer', 'Arshad', '', '', '', '', 25),
+(7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 27),
+(8, 0, 0, '', '', '', '', '', '', 28);
 
 --
 -- Triggers `familydetails`
@@ -296,7 +432,12 @@ CREATE TABLE `institution` (
 
 INSERT INTO `institution` (`ID`, `Name`, `City`, `Type`) VALUES
 (1, 'ABC School', 'Karachi', 'School'),
-(2, 'XYZZ College', 'Larkana', 'College');
+(2, 'XYZZ College', 'Larkana', 'College'),
+(4, 'SKBZ', 'Karachi', 'College'),
+(5, 'advmk', 'Karachi', 'School'),
+(6, 'jab school', '', 'School'),
+(7, 'ham', 'Karachi', 'College'),
+(8, 'Fnjd', 'Karachi', 'School');
 
 -- --------------------------------------------------------
 
@@ -318,7 +459,10 @@ CREATE TABLE `personalreference` (
 --
 
 INSERT INTO `personalreference` (`ID`, `Name`, `PhoneNo`, `Email`, `Relationship`, `Person_id`) VALUES
-(1, 'agd', 0, '', '', 2);
+(1, 'agd', 0, '', '', 2),
+(2, NULL, NULL, NULL, NULL, 25),
+(4, NULL, NULL, NULL, NULL, 27),
+(5, NULL, NULL, NULL, NULL, 28);
 
 -- --------------------------------------------------------
 
@@ -345,11 +489,11 @@ CREATE TABLE `persondetails` (
 --
 
 INSERT INTO `persondetails` (`ID`, `FName`, `LName`, `DateOfBirth`, `Email`, `CNIC`, `Phone`, `Address`, `City`, `District`, `Status`) VALUES
-(2, 'Ali', 'Salim', '2000-01-01', 'abc', '90554512120', '80054587451', '', 'Karachi', 'Sindh', 'Registered'),
+(2, 'Ali', 'Salim', '2000-01-01', 'abc', '90554512120', '80054587451', 'a12', 'Karachi', 'Sindh', 'Registered'),
 (4, 'Danial', 'ak', '2000-01-01', 'root', '42000098754887', '3333454864', '', 'Karachi', 'Sindh', 'Registered'),
-(19, NULL, NULL, NULL, 'root1', NULL, NULL, NULL, NULL, NULL, NULL),
-(23, NULL, NULL, NULL, 'foo', NULL, NULL, NULL, NULL, NULL, NULL),
-(24, NULL, NULL, NULL, 'taha', NULL, NULL, NULL, NULL, NULL, NULL);
+(25, 'Hammad', 'Ahmed', '2001-09-20', 'hammad@iba.edu.pk', '49000493489', '', '', 'Dadu', '', 'Registered'),
+(27, NULL, NULL, NULL, 'waseem', NULL, NULL, NULL, NULL, NULL, NULL),
+(28, 'Ammar', 'Essa', '1995-06-07', 'smarty', '9007497945', '48755421', 'D23', 'Karachi', 'Sindh', 'Registered');
 
 --
 -- Triggers `persondetails`
@@ -357,7 +501,8 @@ INSERT INTO `persondetails` (`ID`, `FName`, `LName`, `DateOfBirth`, `Email`, `CN
 DELIMITER $$
 CREATE TRIGGER `add_Details` AFTER INSERT ON `persondetails` FOR EACH ROW BEGIN
 INSERT INTO `familydetails` (`Person_id`)  VALUES (new.id);
-INSERT INTO `academicdetails` (`Persondetails_id`)  VALUES (new.id);
+INSERT INTO `academicdetails` (`Persondetails_id`,iscollege)  VALUES (new.id,0);
+INSERT INTO `academicdetails` (`Persondetails_id`,iscollege)  VALUES (new.id,1);
 INSERT INTO `academicreference` (`Person_id`)  VALUES (new.id);
 INSERT INTO `personalreference` (`Person_id`)  VALUES (new.id);
 END
@@ -366,7 +511,6 @@ DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `delete_Student` AFTER DELETE ON `persondetails` FOR EACH ROW BEGIN
 DELETE from familydetails WHERE person_id = old.id;
-DELETE from reference WHERE persondetails_id = old.id;
 DELETE from academicdetails WHERE persondetails_id = old.id;
 END
 $$
@@ -395,7 +539,11 @@ INSERT INTO `users` (`uid`, `email`, `password`, `isadmin`) VALUES
 (5, 'root', 'dc76e9f0c0006e8f919e0c515c66dbba3982f785', 0),
 (31, 'root1', 'dc76e9f0c0006e8f919e0c515c66dbba3982f785', 0),
 (35, 'foo', '0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33', 0),
-(36, 'taha', '41237a505d939ae273056ba68a8b2c8bfcdcf46b', 0);
+(36, 'taha', '41237a505d939ae273056ba68a8b2c8bfcdcf46b', 0),
+(41, 'hammad@iba.edu.pk', '08f26c07987bb6587fb165bc29ebde2d31eb6538', 0),
+(42, 'birth@gmail.com', '0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33', 0),
+(45, 'waseem', 'a9993e364706816aba3e25717850c26c9cd0d89d', 0),
+(46, 'smarty', '0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33', 0);
 
 --
 -- Triggers `users`
@@ -498,17 +646,17 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `academicdetails`
 --
 ALTER TABLE `academicdetails`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `academicreference`
 --
 ALTER TABLE `academicreference`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `assetsinfo`
 --
 ALTER TABLE `assetsinfo`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `assettype`
 --
@@ -518,7 +666,7 @@ ALTER TABLE `assettype`
 -- AUTO_INCREMENT for table `expensesinfo`
 --
 ALTER TABLE `expensesinfo`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 --
 -- AUTO_INCREMENT for table `expensetype`
 --
@@ -528,27 +676,27 @@ ALTER TABLE `expensetype`
 -- AUTO_INCREMENT for table `familydetails`
 --
 ALTER TABLE `familydetails`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `institution`
 --
 ALTER TABLE `institution`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `personalreference`
 --
 ALTER TABLE `personalreference`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `persondetails`
 --
 ALTER TABLE `persondetails`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `uid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `uid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- Constraints for dumped tables
 --
