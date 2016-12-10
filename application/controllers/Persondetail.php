@@ -44,6 +44,10 @@ class Persondetail extends CI_Controller
       $this->form_validation->set_rules('FName','FName','alpha');
       $this->form_validation->set_rules('LName','LName','alpha');
       $this->form_validation->set_rules('Phone','Phone','numeric|max_length[16]');
+      $this->form_validation->set_rules('CNIC','CNIC','numeric|max_length[13]');
+      $this->form_validation->set_rules('Address','Address','alpha_numeric|max_length[70]');
+      $this->form_validation->set_rules('City','City','alpha');
+      $this->form_validation->set_rules('District','District','alpha');
 
       if($this->form_validation->run())     
       {   
@@ -77,15 +81,20 @@ class Persondetail extends CI_Controller
     /*
      * Editing a persondetail
      */
-    function edit($email)
+    function edit()
     {  
       $this->form_validation->set_rules('FName','FName','alpha');
       $this->form_validation->set_rules('LName','LName','alpha');
       $this->form_validation->set_rules('Phone','Phone','numeric|max_length[16]');
-      $ID = $this->Persondetail_model->getID($email);
+      $this->form_validation->set_rules('CNIC','CNIC','numeric|max_length[13]');
+      $this->form_validation->set_rules('Address','Address','alpha_numeric|max_length[70]');
+      $this->form_validation->set_rules('City','City','alpha');
+      $this->form_validation->set_rules('District','District','alpha');
+      
       $session_data = $this->session->userdata('logged_in');
       $data['mail'] = $session_data['email'];
       $data['type'] = $session_data['type'];
+      $ID = $this->Persondetail_model->getID($data['mail']);
       if($this->session->userdata('logged_in') && $data['type']== 0)
       {
         if($this->form_validation->run())     
@@ -103,7 +112,7 @@ class Persondetail extends CI_Controller
             'Status' => 'Registered',
             );
           $persondetail_id = $this->Persondetail_model->update_persondetail($ID,$params);
-          redirect('user_c/addacademicinfo/'.$email);
+          redirect('user_c/academic');
         }
         else
         {

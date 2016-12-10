@@ -35,7 +35,6 @@
 						<th>FName</th>
 						<th>LName</th>
 						<th>Percentage</th>
-						<th>FieldOfStudy</th>
 						<th>Institution</th>
 					</tr>
 					<?php foreach($academicdetails as $A){ ?>
@@ -43,16 +42,16 @@
 						<td><?php echo $A['FName']; ?></td>
 						<td><?php echo $A['LName']; ?></td>
 						<td><?php echo $A['Percentage']; ?></td>
-						<td><?php echo $A['FieldOfStudy']; ?></td>
 						<td><?php echo $A['Name']; ?></td>
 					</tr>
 					<?php } ?>
 				</table>
-				<div class="pull-right">
-				<a href="<?php echo site_url('admin/dash'); ?>" class="btn btn-success">Back</a> 
-				</div>
 			</div>
 		</div>
+		<div class="pull-right">
+			<a href="<?php echo site_url('admin/dash'); ?>" class="btn btn-success">Back</a> 
+		</div>
+		<?php include(dirname(__DIR__).'/familydetail/familydetail.php');?>
 	</div>
 
 	<script src="<?php echo base_url(); ?>assets/js/jquery-1.11.1.min.js"></script>

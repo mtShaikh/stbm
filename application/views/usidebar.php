@@ -2,9 +2,8 @@
 <html>
 <body>
 <ul class="nav menu">
-    <li class="<?php if($this->uri->uri_string() == 'user_c/home') { echo 'active'; } ?>"><a href="<?php echo site_url('user_c/home')?>"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg>Home</a></li>
-    <li class="parent <?php if($this->uri->uri_string() == 'user_c/applications') { echo 'active'; } ?>">
-      <a href="<?php echo site_url('user_c/applications')?>">
+    <li class="parent <?php if(($this->uri->uri_string() == 'user_c/home')||($this->uri->uri_string() == 'user_c/register')) { echo 'active'; } ?>">
+      <a href="<?php echo site_url('user_c/home')?>">
         <span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span>Application
       </a>
       <ul class="children collapse.in" id="sub-item-1">
@@ -13,8 +12,8 @@
             <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Personal Information
           </a>
         </li>
-        <li class="<?php if($this->uri->segment(2) == 'user_c/addacademicinfo') { echo 'active'; } ?>">
-          <a class="" href="<?php echo site_url('user_c/addacademicinfo/'.$mail)?>">
+        <li class="<?php if($this->uri->segment(2) == 'user_c/academic') { echo 'active'; } ?>">
+          <a class="" href="<?php echo site_url('user_c/academic/')?>">
             <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Academics
           </a>
         </li>

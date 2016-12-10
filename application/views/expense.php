@@ -19,7 +19,7 @@
 		<?php include("usidebar.php"); ?>
 	</div> 
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-	<?php echo form_open('expensesinfo/edit/'.$mail,array("class"=>"form-horizontal")); ?>
+	<?php echo form_open('expensesinfo/edit/',array("class"=>"form-horizontal")); ?>
 		<div class="row"><h2 class="text-center">Family Expenditures</h2></div>
 		<div class="row"><h4 class="text-center">please mention monthly average amount</h4></div>
 		<br>

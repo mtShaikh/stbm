@@ -45,7 +45,7 @@ class Verifylogin extends CI_Controller {
          $sess_array = array(
          'uid' => $result->uid,
          'email' => $result->email,
-         'type' => $result->isadmin
+         'type' => $result->isadmin,
          );
        $this->session->set_userdata('logged_in', $sess_array);
          redirect('user_c/home');
@@ -80,13 +80,14 @@ function registration(){
       $sess_array = array();
       $sess_array = array(
          'email' => $email,
-         'type' => '0'
+         'type' => '0',
+         'new' =>"Welcome to STB's Scholarship Portal! This is your first login. Please follow the instructions listed below to fill the form."
          );
        $this->session->set_userdata('logged_in', $sess_array);
          redirect('user_c/register');
      }
      else {
-            $this->session->set_flashdata('fail','Email already registered!');
+          $this->session->set_flashdata('fail','Email already registered!');
       redirect('login/register');
      }
    }

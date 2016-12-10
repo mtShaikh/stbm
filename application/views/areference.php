@@ -27,7 +27,7 @@
 			<div class="form-horizontal">
 			<!-- div here all validation errors -->
 				<?php echo validation_errors(); ?>
-				<?php echo form_open('academicreference/edit/'.$mail,array("class"=>"form-horizontal")); ?>
+				<?php echo form_open('academicreference/edit/',array("class"=>"form-horizontal")); ?>
 
 				<div class="form-group">
 					<label for="Name" class="col-md-4 control-label">Name</label>

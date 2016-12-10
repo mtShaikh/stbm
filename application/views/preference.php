@@ -24,7 +24,7 @@
 		<div class="row">
 			<div class="form-horizontal">
 				<?php echo validation_errors(); ?>
-				<?php echo form_open('personalreference/edit/'.$mail,array("class"=>"form-horizontal")); ?>
+				<?php echo form_open('personalreference/edit/',array("class"=>"form-horizontal")); ?>
 
 				<div class="form-group">
 					<label for="Name" class="col-md-4 control-label">Name</label>

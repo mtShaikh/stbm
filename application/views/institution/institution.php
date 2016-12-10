@@ -33,7 +33,6 @@
 					<tr>
 						<th>ID</th>
 						<th>Name</th>
-						<th>Address</th>
 						<th>City</th>
 						<th>Type</th>
 						<th>Actions</th>
@@ -42,7 +41,6 @@
 					<tr>
 						<td><?php echo $I['ID']; ?></td>
 						<td><?php echo $I['Name']; ?></td>
-						<td><?php echo $I['Address']; ?></td>
 						<td><?php echo $I['City']; ?></td>
 						<td><?php echo $I['Type']; ?></td>
 						<td>

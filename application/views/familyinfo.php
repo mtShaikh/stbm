@@ -20,7 +20,7 @@
 	</div>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<?php echo validation_errors(); ?>
-		<?php echo form_open('familydetail/edit/'.$mail,array("class"=>"form-horizontal")); ?>
+		<?php echo form_open('familydetail/edit/',array("class"=>"form-horizontal")); ?>
 		<div class="row"><h2 class="text-center">Family Information</h2></div>
 		<br>
 		<div class="row">
@@ -33,19 +33,19 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="NoOfSiblings" class="col-md-4 control-label">NoOfSiblings</label>
+					<label for="NoOfSiblings" class="col-md-4 control-label">Number Of Siblings</label>
 					<div class="col-md-4">
 						<input type="text" name="NoOfSiblings" value="<?php echo ($this->input->post('NoOfSiblings') ? $this->input->post('NoOfSiblings') : $familydetail['NoOfSiblings']); ?>" class="form-control" id="NoOfSiblings" />
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="FName" class="col-md-4 control-label">FName</label>
+					<label for="FName" class="col-md-4 control-label">First Name</label>
 					<div class="col-md-4">
 						<input type="text" name="FName" value="<?php echo ($this->input->post('FName') ? $this->input->post('FName') : $familydetail['FName']); ?>" class="form-control" id="FName" />
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="LName" class="col-md-4 control-label">LName</label>
+					<label for="LName" class="col-md-4 control-label">Last Name</label>
 					<div class="col-md-4">
 						<input type="text" name="LName" value="<?php echo ($this->input->post('LName') ? $this->input->post('LName') : $familydetail['LName']); ?>" class="form-control" id="LName" />
 					</div>

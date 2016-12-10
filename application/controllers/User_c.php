@@ -24,39 +24,38 @@ class User_c extends CI_Controller {
      switch ($value)
      {
       case 'home':
-      $this->load->view('user_view', $data);
-      break;
-      case 'applications':
       $this->load->view('application', $data);
       break;
       case 'person':
--     redirect('persondetail/edit/'.$data['mail']);
+      redirect('persondetail/edit/');
       break;
       case 'academic':
--     $this->load->view('academicform',$data);
+      redirect('academicdetail/edit/');
       break;
       case 'pass':
       $this->load->view('changepass', $data);
       break;
       case 'family':
-      redirect('familydetail/edit/'.$data['mail']);
+      redirect('familydetail/edit/');
       break;
       case 'asset':
-      redirect('assetsinfo/edit/'.$data['mail']);
+      redirect('assetsinfo/edit/');
       break;
       case 'expense':
-      redirect('expensesinfo/edit/'.$data['mail']);
+      redirect('expensesinfo/edit/');
       break;
       case 'areference':
-      redirect('academicreference/edit/'.$data['mail']);
+      redirect('academicreference/edit/');
       break;
       case 'preference':
-      redirect('personalreference/edit/'.$data['mail']);
+      redirect('personalreference/edit/');
+      break;
+      case 'college':
+      redirect('academicdetail/editclg/');
       break;
       case 'register':
-      $data['new'] = "Welcome to STB's Scholarship Portal!";
-      var_dump($data);
-      $this->load->view('user_view', $data);
+      $data['new'] = $session_data['new'];
+      $this->load->view('application', $data);
       break;
       default:
       $this->session->unset_userdata('logged_in'); //fix this properly
@@ -73,7 +72,7 @@ class User_c extends CI_Controller {
 }
 
 //add academic details
-function addacademicinfo($email)
+/*function addacademicinfo($email)
 {
   $ID = $this->Persondetail_model->getID($email);
   $this->form_validation->set_rules('Percentage','Percentage','decimal');
@@ -98,7 +97,7 @@ function addacademicinfo($email)
     $this->load->view('academicinfo',$data);
   }
 
-}
+}*/
 
 //edit password function
 function editpass(){

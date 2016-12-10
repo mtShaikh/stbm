@@ -19,7 +19,7 @@
 		<?php include("usidebar.php"); ?>
 	</div>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-		<?php echo form_open('assetsinfo/edit/'.$mail,array("class"=>"form-horizontal")); ?>
+		<?php echo form_open('assetsinfo/edit/',array("class"=>"form-horizontal")); ?>
 		<div class="row"><h2 class="text-center">Assets</h2></div>
 		<div class="row"><h4 class="text-center">please mention current market values in rupees</h4></div>
 		<br>

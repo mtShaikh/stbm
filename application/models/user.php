@@ -38,7 +38,7 @@ class user extends CI_Model
 public function register($email,$pass)
 {
   $query = $this->db->query("select registerUser('".$email."','".sha1($pass)."') as res");
-  if($query->res=='n'){
+  if($query->row()->res=='n'){
     return false;
   }
   else{
